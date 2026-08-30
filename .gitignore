@@ -1,0 +1,36 @@
+# === 仓库根目录：默认忽略一切 ===
+/*
+
+# === 显式放行（用户可见的「产物」）===
+!/docs/
+!/README.md
+!/.gitignore
+!/LICENSE
+
+# === 已放行目录内仍要剔除的噪声 ===
+.DS_Store
+*.swp
+*.swo
+*~
+Thumbs.db
+__pycache__/
+*.py[cod]
+
+# === 内部文件（工程过程文档，留本地，不公开）===
+# 蓝图内部对照表 / 同步状态（仅维护用）
+docs/*/blueprint/glossary.md
+docs/*/blueprint/sync-status.yaml
+
+# 备注：
+# 1. /* 仅匹配仓库根一级条目；任一 !/<dir>/ 放行后，其内文件默认被跟踪，再由上方噪声规则剔除。
+# 2. 「产物」（公开）：docs/、README、LICENSE。
+# 3. 「工程过程」（留本地、未放行故不推送）：openspec/、.kiro/、.dev-os/、.cursor/、
+#    .githooks/、AGENTS.md、decisions/。
+#    依据 PO 裁定 D-1（2026-08-12）：**openspec 永久留本地、只供开发团队，docs/ 是唯一公开产物**。
+# 4. schema/ 未放行：当前 draft 与 2025-10-25 两版 schema.json 均为占位 `{}`（8 字节），
+#    schema.ts/.mdx 亦为 28–36 字节占位。定稿有实质内容后再追加 !/schema/ 放行
+#    （与 faying-protocol 对单数 schema/ 占位的处置一致）。
+# 5. 本文件为 2026-08-12 新建：此前 cofay **完全没有 .gitignore**，
+#    openspec/ 与 .kiro/ 等过程工具全部处于「未忽略且未跟踪」状态，
+#    一次 `git add .` 即会违反组织宪章「过程工具不进 github repo」与 GOV-05 三桶规则。
+# 6. 后续如需公开更多目录，追加一行 !/<dir>/ 即可。
