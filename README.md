@@ -58,7 +58,11 @@ cofay/
 ├── tests/
 │   └── cofay-charter.test.mjs               # Automated Node test suite
 ├── package.json
-└── LICENSE
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── CODE_OF_CONDUCT.md
+├── LICENSE
+└── LICENSE-DOCS
 ```
 
 ---
@@ -94,4 +98,7 @@ console.log(result.valid, report.conformance); // true, "PASS"
 
 ## License
 
-Apache License 2.0 — see [LICENSE](./LICENSE).
+This repository uses a dual-track open-source license (`Copyright (c) 2025-2026 ChainMode contributors`):
+
+- **Source Code, Schemas & Conformance Vectors** (`src/`, `schemas/`, `schema/`, `vectors/`, `tests/`): Licensed under the **MIT License** — see [LICENSE](./LICENSE).
+- **Specifications & Architectural Blueprints** (`docs/`): Licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)** — see [LICENSE-DOCS](./LICENSE-DOCS).

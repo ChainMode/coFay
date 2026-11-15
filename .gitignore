@@ -12,6 +12,10 @@
 !/README.md
 !/.gitignore
 !/LICENSE
+!/LICENSE-DOCS
+!/SECURITY.md
+!/CONTRIBUTING.md
+!/CODE_OF_CONDUCT.md
 
 # === 已放行目录内仍要剔除的噪声 ===
 .DS_Store

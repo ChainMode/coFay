@@ -2,7 +2,7 @@
   "name": "@ifay/cofay",
   "version": "1.0.0",
   "description": "coFay (Common Fay) RoleCharter 1.0 schema, vectors, dual-signed ownership transfer validator, and coFACTS L1 conformance checker.",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "module",
   "main": "./src/cofay-charter.mjs",
   "types": "./src/cofay-charter.d.ts",
@@ -21,7 +21,8 @@
     "vectors",
     "docs",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "LICENSE-DOCS"
   ],
   "engines": {
     "node": ">=20.0.0"
