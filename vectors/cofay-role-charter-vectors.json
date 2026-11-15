@@ -1,0 +1,1479 @@
+{
+  "suite": "cofay-role-charter-conformance",
+  "version": "1.0",
+  "release_baseline": "2025-10-25",
+  "schema_ref": "https://ifay.ai/schemas/cofay-role-charter-1.0.json",
+  "vectors": [
+    {
+      "id": "V01-valid-org-service",
+      "kind": "role_charter",
+      "description": "Valid org_service RoleCharter owned by OrganizationID with natural-person steward and Ed25519 JCS signature.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "id": "V02-valid-functional-post",
+      "kind": "role_charter",
+      "description": "Valid functional_post RoleCharter for CAP official_post seat with restricted SSP skill auth gate.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vbfuncpost234567abcd",
+        "charter_revision": 1,
+        "cofay_id": "cofay_govpostauditor234567",
+        "display_name": "Ecosystem Governance Audit Seat",
+        "role_archetype": "functional_post",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/audit-attest@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:official_post.attest"
+            ],
+            "max_autonomy_tier": "official_post",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "6cebf9384a88cce13f0bfc49945fa746f81d8f06a2bf88f08f903879f209438ca7ac1bc1365f966e44c0de0961d7df430765f8e317b16f3d9a0d5b70cc0b480b"
+        }
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "id": "V03-valid-project-collaborator",
+      "kind": "role_charter",
+      "description": "Valid project_collaborator RoleCharter owned directly by a HumanID.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vcprojcollab234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_ossprojectbot234567",
+        "display_name": "Open Protocol Triage Collaborator",
+        "role_archetype": "project_collaborator",
+        "owner": {
+          "type": "human",
+          "id": "hid_maintainersolo234567"
+        },
+        "managers": [
+          "ifay_maintainersoloifay23"
+        ],
+        "mission_statement": "Coordinate issue triage and conformance verification for the open protocol project.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_maintainersolo234567",
+          "public_key_hex": "d04ab232742bb4ab3a1368bd4615e4e6d0224ab71a016baf8520a332c9778737",
+          "signature_hex": "3e1dcbcb7ea5acc127f0d2329c8238ed723e895fd6b9ef972eb443a17ba1224b20a748be7f9faef0b004d42ec2f7607bbdb5d3c0bff3907b806bca55284f7504"
+        }
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "id": "V04-reject-ifay-owner-nesting",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject RoleCharter declaring an iFay identifier as owner (single-layer ownership forbids ifay_ owners).",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "human",
+          "id": "ifay_opsmanageralpha2345"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "OWNER_TYPE_FORBIDDEN"
+      }
+    },
+    {
+      "id": "V05-reject-cofay-owner-nesting",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject RoleCharter declaring another coFay identifier as owner (forbids coFay-owns-coFay nesting).",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "cofay_parentrole234567"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "OWNER_TYPE_FORBIDDEN"
+      }
+    },
+    {
+      "id": "V06-reject-missing-steward-on-org",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject organization-owned RoleCharter missing accountable natural-person steward_human_id.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "ORG_STEWARD_REQUIRED"
+      }
+    },
+    {
+      "id": "V07-reject-ifay-as-steward",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject organization-owned RoleCharter using an iFay identifier as steward_human_id.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "ifay_opsmanageralpha2345",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "STEWARD_MUST_BE_HUMAN"
+      }
+    },
+    {
+      "id": "V08-reject-ego-package-attachment",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject RoleCharter attempting to attach a personal Ego model package to a coFay.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "ego_package": "@ego-models/personal-persona@1.0.0"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "COFAY_EGO_FORBIDDEN"
+      }
+    },
+    {
+      "id": "V09-reject-restricted-ssp-without-auth",
+      "kind": "role_charter",
+      "verify_signature": false,
+      "description": "Reject restricted SSP skill capability missing mandatory caller authentication.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": false
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "SSP_AUTH_REQUIRED_FOR_NON_PUBLIC"
+      }
+    },
+    {
+      "id": "V10-reject-tampered-charter-signature",
+      "kind": "role_charter",
+      "description": "Reject signed RoleCharter whose payload was tampered after Ed25519 JCS signing.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Tampered unauthorized mission statement.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "CHARTER_SIGNATURE_INVALID"
+      }
+    },
+    {
+      "id": "V11-valid-orthogonal-ifay-delegation",
+      "kind": "manager_delegation",
+      "description": "Accept single-hop iFay operational manager grant issued by accountable human steward.",
+      "charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "action": "GRANT",
+        "issuer_id": "hid_stewardorgone234567",
+        "target_manager_id": "ifay_opsmanagercharlie23"
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "id": "V12-reject-manager-redelegation",
+      "kind": "manager_delegation",
+      "description": "Reject re-delegation attempt issued by an active iFay manager rather than owner/steward.",
+      "charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "action": "GRANT",
+        "issuer_id": "ifay_opsmanageralpha2345",
+        "target_manager_id": "ifay_opsmanagercharlie23"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "MANAGER_REDELEGATION_FORBIDDEN"
+      }
+    },
+    {
+      "id": "V13-reject-cofay-as-manager-target",
+      "kind": "manager_delegation",
+      "description": "Reject delegating operational management to another coFay instead of an iFay.",
+      "charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "action": "GRANT",
+        "issuer_id": "hid_stewardorgone234567",
+        "target_manager_id": "cofay_govpostauditor234567"
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "MANAGER_TARGET_INVALID"
+      }
+    },
+    {
+      "id": "V14-valid-dual-signed-transfer-clear-all",
+      "kind": "ownership_transfer",
+      "description": "Accept dual-signed atomic ownership transfer clearing prior managers while preserving cofay_id and MeritPocket.",
+      "current_charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "envelope_version": "1.0",
+        "cofay_id": "cofay_orgservicedesk234567",
+        "prior_charter_digest_hex": "b2dcc71e8b41126c468d460677ad626fd8ee4e35c33832958bceb9667b971a2c",
+        "transfer_nonce": 1,
+        "from_owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "to_owner": {
+          "type": "organization",
+          "id": "org_regional-service-board"
+        },
+        "new_steward_human_id": "hid_stewardorgtwo234567",
+        "manager_policy": "CLEAR_ALL",
+        "ratified_managers": [],
+        "merit_continuity": {
+          "preserve_cofay_id": true,
+          "preserve_merit_pocket": true
+        },
+        "initiated_at": "2026-11-16T06:00:00Z",
+        "expires_at": "2026-11-17T06:00:00Z",
+        "from_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "9e382dfb48c06ea1ce890b53c85f298c96bfcb5847a5af706c1fe6e02b6a970dd24c4a483e133017727a92a1cbc2845f1ac0ad006bb740bc83f7a2539e48a300"
+        },
+        "to_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgtwo234567",
+          "public_key_hex": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+          "signature_hex": "abbaf18995da55103828080df683a6a466d5eb835a7b8a02bffadbf53f76f474d87fd0b2558fb1d587739ccb9a9ae02c00768e49fff4c76cf9aa505f90f29600"
+        }
+      },
+      "next_owner_signer_id": "hid_stewardorgtwo234567",
+      "next_owner_seed_hex": "3333333333333333333333333333333333333333333333333333333333333333",
+      "expected": {
+        "valid": true,
+        "resulting_managers": []
+      }
+    },
+    {
+      "id": "V15-valid-dual-signed-transfer-ratify-new",
+      "kind": "ownership_transfer",
+      "description": "Accept dual-signed atomic ownership transfer explicitly ratifying a new iFay manager and purging stale prior managers.",
+      "current_charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "envelope_version": "1.0",
+        "cofay_id": "cofay_orgservicedesk234567",
+        "prior_charter_digest_hex": "b2dcc71e8b41126c468d460677ad626fd8ee4e35c33832958bceb9667b971a2c",
+        "transfer_nonce": 1,
+        "from_owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "to_owner": {
+          "type": "organization",
+          "id": "org_regional-service-board"
+        },
+        "new_steward_human_id": "hid_stewardorgtwo234567",
+        "manager_policy": "RATIFY_NEW",
+        "ratified_managers": [
+          "ifay_neworgdelegate23456"
+        ],
+        "merit_continuity": {
+          "preserve_cofay_id": true,
+          "preserve_merit_pocket": true
+        },
+        "initiated_at": "2026-11-16T06:00:00Z",
+        "expires_at": "2026-11-17T06:00:00Z",
+        "from_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "004235a3777129037b10479911302aa5c005f737b4b0c8133aafa374e60deae2ff0f5611c81ead8b26f6fca85208214b1a6d3f17d14027cdcf0749be91cdcf06"
+        },
+        "to_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgtwo234567",
+          "public_key_hex": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+          "signature_hex": "e9d036154f79e4301b8fbd8c21f84361101b987259834a6c4a5cc7709bd1a57edf2c0df4e96f431d30a7b80d6b1e10e1dd71faa6dacc22b6b14e580c01739a02"
+        }
+      },
+      "next_owner_signer_id": "hid_stewardorgtwo234567",
+      "next_owner_seed_hex": "3333333333333333333333333333333333333333333333333333333333333333",
+      "expected": {
+        "valid": true,
+        "resulting_managers": [
+          "ifay_neworgdelegate23456"
+        ]
+      }
+    },
+    {
+      "id": "V16-reject-unilateral-single-signed-transfer",
+      "kind": "ownership_transfer",
+      "description": "Reject unilateral ownership transfer signed only by outgoing owner without incoming owner consent.",
+      "current_charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "envelope_version": "1.0",
+        "cofay_id": "cofay_orgservicedesk234567",
+        "prior_charter_digest_hex": "b2dcc71e8b41126c468d460677ad626fd8ee4e35c33832958bceb9667b971a2c",
+        "transfer_nonce": 1,
+        "from_owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "to_owner": {
+          "type": "organization",
+          "id": "org_regional-service-board"
+        },
+        "new_steward_human_id": "hid_stewardorgtwo234567",
+        "manager_policy": "CLEAR_ALL",
+        "ratified_managers": [],
+        "merit_continuity": {
+          "preserve_cofay_id": true,
+          "preserve_merit_pocket": true
+        },
+        "initiated_at": "2026-11-16T06:00:00Z",
+        "expires_at": "2026-11-17T06:00:00Z",
+        "from_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "9e382dfb48c06ea1ce890b53c85f298c96bfcb5847a5af706c1fe6e02b6a970dd24c4a483e133017727a92a1cbc2845f1ac0ad006bb740bc83f7a2539e48a300"
+        }
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "TRANSFER_DUAL_SIGNATURE_REQUIRED"
+      }
+    },
+    {
+      "id": "V17-reject-replay-transfer-nonce",
+      "kind": "ownership_transfer",
+      "description": "Reject replayed transfer_nonce that does not strictly equal currentCharter.transfer_nonce + 1.",
+      "current_charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 2,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 1,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "9daf23243d43ac6de093812ae66ca9c966761b3110d1a4eec450f19da5b7b7a755de1a0376a2e77ecc8e0d80faefedd027188b155d1d0911dfb10f4bed0fd904"
+        }
+      },
+      "input": {
+        "envelope_version": "1.0",
+        "cofay_id": "cofay_orgservicedesk234567",
+        "prior_charter_digest_hex": "51f6211991669dc3578e789ec91454bab7070e3adf04d7e94f61b903d58c0519",
+        "transfer_nonce": 1,
+        "from_owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "to_owner": {
+          "type": "organization",
+          "id": "org_regional-service-board"
+        },
+        "new_steward_human_id": "hid_stewardorgtwo234567",
+        "manager_policy": "CLEAR_ALL",
+        "ratified_managers": [],
+        "merit_continuity": {
+          "preserve_cofay_id": true,
+          "preserve_merit_pocket": true
+        },
+        "initiated_at": "2026-11-16T06:00:00Z",
+        "expires_at": "2026-11-17T06:00:00Z",
+        "from_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "85cdde1e0cf28c82bec4acaab5efd73e66a7c7af64762f3255ebffd5700ac5ecfed11d84a329ebe6f96180852cb89c121c17e5c6a17cb18af40dcba5c14dba0b"
+        },
+        "to_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgtwo234567",
+          "public_key_hex": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+          "signature_hex": "4df88e2b15b6e433876dba56009f94626cf1c32f7f9e7554462526497bac768aa7adf83757ae79e0044a23bbbc66a148824e50cd7979fe90a14c991d3fed320e"
+        }
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "TRANSFER_NONCE_MISMATCH"
+      }
+    },
+    {
+      "id": "V18-reject-prior-charter-digest-mismatch",
+      "kind": "ownership_transfer",
+      "description": "Reject ownership transfer whose prior_charter_digest_hex does not match current RoleCharter JCS digest.",
+      "current_charter": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "input": {
+        "envelope_version": "1.0",
+        "cofay_id": "cofay_orgservicedesk234567",
+        "prior_charter_digest_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "transfer_nonce": 1,
+        "from_owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "to_owner": {
+          "type": "organization",
+          "id": "org_regional-service-board"
+        },
+        "new_steward_human_id": "hid_stewardorgtwo234567",
+        "manager_policy": "CLEAR_ALL",
+        "ratified_managers": [],
+        "merit_continuity": {
+          "preserve_cofay_id": true,
+          "preserve_merit_pocket": true
+        },
+        "initiated_at": "2026-11-16T06:00:00Z",
+        "expires_at": "2026-11-17T06:00:00Z",
+        "from_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "fa4740fca1ce8980179b39ca18bf364bd551a00501f40d24cccdc5bfc624ffb84f4fd04c9c3e64a2ef7eb8c293b41c8ec13801c552464af5a94575b952ee7904"
+        },
+        "to_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.ownership-transfer.v1",
+          "signer_id": "hid_stewardorgtwo234567",
+          "public_key_hex": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+          "signature_hex": "055529173784a87cbfa4d15e719ae843ca8da029a342e97b17bf0f66ad3c02ef90ec61efb3d743e9fcaa1c0122a094ead1ddb3c39c8b676d842662359964e107"
+        }
+      },
+      "expected": {
+        "valid": false,
+        "error_code": "PRIOR_CHARTER_DIGEST_MISMATCH"
+      }
+    },
+    {
+      "id": "V19-valid-cofacts-l1-pass",
+      "kind": "cofacts_l1",
+      "description": "coFACTS L1 conformance suite passes a compliant, cryptographically signed coFay RoleCharter.",
+      "input": {
+        "schema_version": "1.0",
+        "charter_id": "chr_vaorgservice234567ab",
+        "charter_revision": 1,
+        "cofay_id": "cofay_orgservicedesk234567",
+        "display_name": "City Public Consultation Desk",
+        "role_archetype": "org_service",
+        "owner": {
+          "type": "organization",
+          "id": "org_city-hall-services"
+        },
+        "steward_human_id": "hid_stewardorgone234567",
+        "managers": [
+          "ifay_opsmanageralpha2345",
+          "ifay_opsmanagerbravo2345"
+        ],
+        "mission_statement": "Deliver standardized civic service guidance and application intake on behalf of City Hall Services.",
+        "allowed_capabilities": {
+          "ssp_skills": [
+            {
+              "skill_ref": "ssp://org_city-hall-services/faq@1.0",
+              "visibility": "public",
+              "require_caller_auth": false
+            },
+            {
+              "skill_ref": "ssp://org_city-hall-services/intake@1.0",
+              "visibility": "restricted",
+              "require_caller_auth": true
+            }
+          ],
+          "cap_bounds": {
+            "allowed_scopes": [
+              "cap:ticket.create",
+              "cap:faq.respond"
+            ],
+            "max_autonomy_tier": "delegated",
+            "allow_irreversible_actions": false
+          }
+        },
+        "prohibited_actions": [
+          "Never claim to be a Human Prime or attach any personal Ego model.",
+          "Never approve statutory exemptions without steward review."
+        ],
+        "audit_policy": {
+          "retention_days": 365,
+          "log_mode": "hash_chain",
+          "require_actor_trace": true,
+          "gmc_merit_pocket_ref": "mpk_orgservicedesk234567"
+        },
+        "lifecycle_state": "ACTIVE",
+        "transfer_nonce": 0,
+        "issued_at": "2026-11-16T00:00:00Z",
+        "owner_signature": {
+          "alg": "Ed25519",
+          "domain": "ifay.cofay.role-charter.v1",
+          "signer_id": "hid_stewardorgone234567",
+          "public_key_hex": "a09aa5f47a6759802ff955f8dc2d2a14a5c99d23be97f864127ff9383455a4f0",
+          "signature_hex": "0a54d549253f7e7d7567510c515f8f079d9a0be0edef1f4e56f2cdb042e02064cd2e51a201c56b36335c545f820ff619dae2f7e064975cb04d1d5e59b13de202"
+        }
+      },
+      "expected": {
+        "conformance": "PASS"
+      }
+    },
+    {
+      "id": "V20-reject-cofacts-ifay-boundary",
+      "kind": "cofacts_l1",
+      "description": "coFACTS L1 enforces boundary interception and rejects an iFay personal avatar input.",
+      "input": {
+        "cofay_id": "ifay_opsmanageralpha2345",
+        "kind": "IFAY_MANIFEST"
+      },
+      "expected": {
+        "conformance": "REJECTED_BOUNDARY",
+        "error_code": "BOUNDARY_IFAY_USE_IFACTS"
+      }
+    }
+  ]
+}

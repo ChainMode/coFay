@@ -1,0 +1,63 @@
+# coFay RoleCharter 1.0 Normative Schema (`2025-10-25`)
+
+- **Schema ID:** `https://ifay.ai/schemas/cofay-role-charter-1.0.json`
+- **JSON Schema Draft:** `2020-12`
+- **Release Baseline:** `2025-10-25`
+- **Conformance Suite:** `coFACTS` L1 (`cofacts-l1-report/1.0`)
+
+---
+
+## `RoleCharter` (Root Object)
+
+Defines the public role archetype, single-layer legal accountability owner, natural-person steward, orthogonal `iFay` operational delegates, capability boundaries, explicit red lines, audit traceability policy, and Ed25519 signature over RFC 8785 JCS canonicalization for a `coFay` (`Common Fay`).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `schema_version` | `"1.0"` | Yes | Normative two-segment schema version. |
+| `charter_id` | `chr_<base32>` | Yes | Unique `RoleCharter` document identifier. |
+| `charter_revision` | `integer >= 1` | Yes | Monotonically increasing charter revision counter. |
+| `cofay_id` | `cofay_<base32>` | Yes | Canonical `coFay` identifier (see `FayID`). |
+| `display_name` | `string` | Yes | Publicly visible name of the functional social role. |
+| `role_archetype` | `"org_service" \| "functional_post" \| "project_collaborator"` | Yes | Canonical public role archetype. |
+| `owner` | `SingleLayerOwnerRef` | Yes | Single-layer owner (`hid_<base32>` or `org_<slug\|base32>`). Forbids `ifay_` and `cofay_` nesting. |
+| `steward_human_id` | `hid_<base32>` | Conditional | Accountable natural-person steward. **Required** whenever `owner.type` is `"organization"`. |
+| `managers` | `ifay_<base32>[]` | Yes | Orthogonal single-hop operational delegates (`iFay` instances). Never alters `owner`. |
+| `mission_statement` | `string` | Yes | Public role charter mission and representational scope. |
+| `allowed_capabilities` | `AllowedCapabilities` | Yes | SSP skill exposures and CAP resource autonomy bounds. |
+| `prohibited_actions` | `string[]` | Yes | Non-empty list of explicit behavioral red lines. |
+| `audit_policy` | `AuditPolicy` | Yes | Local hash-chain/append-only traceability policy (`require_actor_trace: true`) and optional `GMChain` `MeritPocket` reference. |
+| `lifecycle_state` | `"ACTIVE" \| "SUSPENDED_PENDING_SUCCESSION" \| "REVOKED"` | Yes | Operational lifecycle state. |
+| `transfer_nonce` | `integer >= 0` | Yes | Monotonic counter incremented by each atomic ownership transfer. |
+| `issued_at` | `string` (RFC 3339) | Yes | Charter issuance timestamp. |
+| `expires_at` | `string` (RFC 3339) | No | Optional charter expiration timestamp. |
+| `owner_signature` | `Ed25519SignatureBlock` | Yes | Ed25519 signature over `"ifay.cofay.role-charter.v1\0" + JCS(unsignedCharter)`. |
+
+### Structural & Semantic Invariants
+
+1. **No Ego Layer (`COFAY_EGO_FORBIDDEN`)**: `coFay` spans the Social, Interaction, and Cognitive layers only. Attaching any personal `Ego` package (`ego_package`, `ego_model`, `human_prime_id`) or representing a natural person's private persona is strictly prohibited.
+2. **Single-Layer Ownership (`OWNER_TYPE_FORBIDDEN`)**: `owner` MUST be a `HumanID` (`hid_`) or `OrganizationID` (`org_`). Neither `iFay` (`ifay_`) nor `coFay` (`cofay_`) may own a `coFay`.
+3. **Accountable Human Steward (`ORG_STEWARD_REQUIRED`)**: Every organization-owned `coFay` MUST declare a `steward_human_id` (`hid_`).
+4. **Single-Hop Operational Delegation (`MANAGER_REDELEGATION_FORBIDDEN`)**: Only `owner` or `steward_human_id` may grant or revoke `managers: iFayID[]`; active managers MUST NOT re-delegate authority to other `iFay` instances.
+
+---
+
+## `$defs.TransferEnvelope` (Atomic Dual-Signed Ownership Transfer `1.0`)
+
+Executes atomic ownership transfer between single-layer owners while preserving `cofay_id` and its 1:1 bound `MeritPocket` on `GMChain` (`Global Merit Chain`).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `envelope_version` | `"1.0"` | Yes | Normative transfer envelope version. |
+| `cofay_id` | `cofay_<base32>` | Yes | Target `coFay` identifier (preserved intact across transfer). |
+| `prior_charter_digest_hex` | `Hex32Bytes` | Yes | SHA-256 hex digest of JCS-canonicalized active `RoleCharter`. |
+| `transfer_nonce` | `integer >= 1` | Yes | Strictly equals `currentCharter.transfer_nonce + 1` to prevent replay. |
+| `from_owner` | `SingleLayerOwnerRef` | Yes | Outgoing owner matching `currentCharter.owner`. |
+| `to_owner` | `SingleLayerOwnerRef` | Yes | Incoming single-layer owner (`HumanID` or `OrganizationID`). |
+| `new_steward_human_id` | `hid_<base32>` | Conditional | **Required** when `to_owner.type` is `"organization"`. |
+| `manager_policy` | `"CLEAR_ALL" \| "RATIFY_NEW"` | Yes | Purges prior managers (`CLEAR_ALL`) or explicitly re-ratifies `ratified_managers` (`RATIFY_NEW`). |
+| `ratified_managers` | `ifay_<base32>[]` | Yes | Must be `[]` when `CLEAR_ALL`; explicit incoming manager list when `RATIFY_NEW`. |
+| `merit_continuity` | `{ preserve_cofay_id: true, preserve_merit_pocket: true }` | Yes | Preserves role identity and non-monetary `MeriToken` contribution history without inheritance haircutting. |
+| `initiated_at` | `string` (RFC 3339) | Yes | Envelope creation timestamp. |
+| `expires_at` | `string` (RFC 3339) | Yes | Envelope expiration timestamp. |
+| `from_signature` | `Ed25519SignatureBlock` | Yes | Outgoing owner/steward Ed25519 signature over `"ifay.cofay.ownership-transfer.v1\0" + JCS(unsignedEnvelope)`. |
+| `to_signature` | `Ed25519SignatureBlock` | Yes | Incoming owner/steward Ed25519 signature over the identical canonical transfer payload. |

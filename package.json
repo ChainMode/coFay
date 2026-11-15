@@ -1,0 +1,32 @@
+{
+  "name": "@ifay/cofay",
+  "version": "1.0.0",
+  "description": "coFay (Common Fay) RoleCharter 1.0 schema, vectors, dual-signed ownership transfer validator, and coFACTS L1 conformance checker.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/cofay-charter.mjs",
+  "types": "./src/cofay-charter.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/cofay-charter.d.ts",
+      "import": "./src/cofay-charter.mjs"
+    },
+    "./schemas/role-charter-1.0": "./schemas/cofay-role-charter-1.0.json",
+    "./vectors/role-charter-1.0": "./vectors/cofay-role-charter-vectors.json"
+  },
+  "files": [
+    "src",
+    "schemas",
+    "schema",
+    "vectors",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  }
+}

@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ifay.ai/schemas/cofay-role-charter-1.0.json",
+  "title": "coFay RoleCharter 1.0 Normative Schema",
+  "description": "Normative JSON Schema for coFay (Common Fay) RoleCharter 1.0, Atomic Dual-Signed Ownership Transfer (TransferEnvelope 1.0), Single-Hop Manager Delegation, and coFACTS L1 Conformance Reporting.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "charter_id",
+    "charter_revision",
+    "cofay_id",
+    "display_name",
+    "role_archetype",
+    "owner",
+    "managers",
+    "mission_statement",
+    "allowed_capabilities",
+    "prohibited_actions",
+    "audit_policy",
+    "lifecycle_state",
+    "transfer_nonce",
+    "issued_at",
+    "owner_signature"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Two-segment normative schema version for RoleCharter."
+    },
+    "charter_id": {
+      "$ref": "#/$defs/CharterIDString"
+    },
+    "charter_revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonically increasing charter revision counter starting at 1."
+    },
+    "cofay_id": {
+      "$ref": "#/$defs/CoFayIDString"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 160,
+      "description": "Human-readable public role name."
+    },
+    "role_archetype": {
+      "$ref": "#/$defs/RoleArchetype"
+    },
+    "owner": {
+      "$ref": "#/$defs/SingleLayerOwnerRef"
+    },
+    "steward_human_id": {
+      "$ref": "#/$defs/HumanIDString",
+      "description": "Natural-person accountable steward (HumanID). REQUIRED when owner.type is 'organization'; if provided when owner.type is 'human', MUST equal owner.id."
+    },
+    "managers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/IFayIDString"
+      },
+      "description": "Orthogonal single-hop operational delegates (iFay instances only). Granting or revoking managers never changes ownership."
+    },
+    "mission_statement": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Public statement of the coFay's functional role and representational scope."
+    },
+    "allowed_capabilities": {
+      "$ref": "#/$defs/AllowedCapabilities"
+    },
+    "prohibited_actions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 500
+      },
+      "description": "Explicit behavioral red lines that the coFay MUST NOT execute."
+    },
+    "audit_policy": {
+      "$ref": "#/$defs/AuditPolicy"
+    },
+    "lifecycle_state": {
+      "$ref": "#/$defs/LifecycleState"
+    },
+    "transfer_nonce": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonic counter of completed atomic ownership transfers (0 at initial creation)."
+    },
+    "issued_at": {
+      "$ref": "#/$defs/Timestamp"
+    },
+    "expires_at": {
+      "$ref": "#/$defs/Timestamp"
+    },
+    "owner_signature": {
+      "$ref": "#/$defs/Ed25519SignatureBlock"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "owner": {
+            "properties": {
+              "type": { "const": "organization" }
+            },
+            "required": ["type"]
+          }
+        },
+        "required": ["owner"]
+      },
+      "then": {
+        "required": ["steward_human_id"]
+      }
+    }
+  ],
+  "$defs": {
+    "CharterIDString": {
+      "type": "string",
+      "pattern": "^chr_[a-z2-7]{16,64}$",
+      "description": "Canonical RoleCharter identifier using lowercase unpadded RFC 4648 Base32."
+    },
+    "HumanIDString": {
+      "type": "string",
+      "pattern": "^hid_[a-z2-7]+$",
+      "description": "Canonical Human Prime root identifier reference (see FayID)."
+    },
+    "IFayIDString": {
+      "type": "string",
+      "pattern": "^ifay_[a-z2-7]+$",
+      "description": "Canonical Individual Fay identifier reference (see FayID)."
+    },
+    "CoFayIDString": {
+      "type": "string",
+      "pattern": "^cofay_[a-z2-7]+$",
+      "description": "Canonical Common Fay identifier reference (see FayID)."
+    },
+    "OrganizationIDString": {
+      "type": "string",
+      "pattern": "^org_[a-z0-9-]+$",
+      "description": "Canonical Organization identifier reference (see FayID)."
+    },
+    "MeritPocketRefString": {
+      "type": "string",
+      "pattern": "^mpk_[a-z2-7]+$",
+      "description": "Optional narrative reference to the 1:1 bound MeritPocket on GMChain (see Global-Merit-Chain)."
+    },
+    "Hex32Bytes": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "Hex64Bytes": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{128}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "RoleArchetype": {
+      "type": "string",
+      "enum": [
+        "org_service",
+        "functional_post",
+        "project_collaborator"
+      ],
+      "description": "Initial public role taxonomy defined in ADR 0001."
+    },
+    "LifecycleState": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "SUSPENDED_PENDING_SUCCESSION",
+        "REVOKED"
+      ]
+    },
+    "SingleLayerOwnerRef": {
+      "description": "Single-layer legal/accountability owner. Strictly forbids ifay_ or cofay_ ownership nesting.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "const": "human" },
+            "id": { "$ref": "#/$defs/HumanIDString" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "const": "organization" },
+            "id": { "$ref": "#/$defs/OrganizationIDString" }
+          }
+        }
+      ]
+    },
+    "SspSkillCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill_ref", "visibility", "require_caller_auth"],
+      "properties": {
+        "skill_ref": {
+          "type": "string",
+          "minLength": 6
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "restricted", "private"]
+        },
+        "require_caller_auth": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "visibility": { "enum": ["restricted", "private"] }
+            }
+          },
+          "then": {
+            "properties": {
+              "require_caller_auth": { "const": true }
+            }
+          }
+        }
+      ]
+    },
+    "CapResourceBounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_scopes", "max_autonomy_tier", "allow_irreversible_actions"],
+      "properties": {
+        "allowed_scopes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "max_autonomy_tier": {
+          "type": "string",
+          "enum": ["assistive", "delegated", "official_post"]
+        },
+        "allow_irreversible_actions": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AllowedCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ssp_skills", "cap_bounds"],
+      "properties": {
+        "ssp_skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SspSkillCapability" }
+        },
+        "cap_bounds": {
+          "$ref": "#/$defs/CapResourceBounds"
+        }
+      }
+    },
+    "AuditPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["retention_days", "log_mode", "require_actor_trace"],
+      "properties": {
+        "retention_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "log_mode": {
+          "type": "string",
+          "enum": ["hash_chain", "append_only"]
+        },
+        "require_actor_trace": {
+          "const": true,
+          "description": "Every outbound action MUST record cofay_id, owner.id, and actor_signer_id."
+        },
+        "gmc_merit_pocket_ref": {
+          "$ref": "#/$defs/MeritPocketRefString"
+        }
+      }
+    },
+    "Ed25519SignatureBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "domain", "signer_id", "public_key_hex", "signature_hex"],
+      "properties": {
+        "alg": {
+          "const": "Ed25519"
+        },
+        "domain": {
+          "type": "string",
+          "enum": [
+            "ifay.cofay.role-charter.v1",
+            "ifay.cofay.ownership-transfer.v1"
+          ]
+        },
+        "signer_id": {
+          "oneOf": [
+            { "$ref": "#/$defs/HumanIDString" },
+            { "$ref": "#/$defs/OrganizationIDString" }
+          ]
+        },
+        "public_key_hex": {
+          "$ref": "#/$defs/Hex32Bytes"
+        },
+        "signature_hex": {
+          "$ref": "#/$defs/Hex64Bytes"
+        }
+      }
+    },
+    "TransferEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Atomic Dual-Signed Ownership Transfer envelope (TransferEnvelope 1.0). Requires signatures from both outgoing and incoming owners/stewards and enforces stale-manager purge.",
+      "required": [
+        "envelope_version",
+        "cofay_id",
+        "prior_charter_digest_hex",
+        "transfer_nonce",
+        "from_owner",
+        "to_owner",
+        "manager_policy",
+        "ratified_managers",
+        "merit_continuity",
+        "initiated_at",
+        "expires_at",
+        "from_signature",
+        "to_signature"
+      ],
+      "properties": {
+        "envelope_version": {
+          "const": "1.0"
+        },
+        "cofay_id": {
+          "$ref": "#/$defs/CoFayIDString"
+        },
+        "prior_charter_digest_hex": {
+          "$ref": "#/$defs/Hex32Bytes"
+        },
+        "transfer_nonce": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "from_owner": {
+          "$ref": "#/$defs/SingleLayerOwnerRef"
+        },
+        "to_owner": {
+          "$ref": "#/$defs/SingleLayerOwnerRef"
+        },
+        "new_steward_human_id": {
+          "$ref": "#/$defs/HumanIDString"
+        },
+        "manager_policy": {
+          "type": "string",
+          "enum": ["CLEAR_ALL", "RATIFY_NEW"]
+        },
+        "ratified_managers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/IFayIDString" }
+        },
+        "merit_continuity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["preserve_cofay_id", "preserve_merit_pocket"],
+          "properties": {
+            "preserve_cofay_id": { "const": true },
+            "preserve_merit_pocket": { "const": true }
+          }
+        },
+        "initiated_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "from_signature": {
+          "$ref": "#/$defs/Ed25519SignatureBlock"
+        },
+        "to_signature": {
+          "$ref": "#/$defs/Ed25519SignatureBlock"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "to_owner": {
+                "properties": {
+                  "type": { "const": "organization" }
+                },
+                "required": ["type"]
+              }
+            },
+            "required": ["to_owner"]
+          },
+          "then": {
+            "required": ["new_steward_human_id"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "manager_policy": { "const": "CLEAR_ALL" }
+            }
+          },
+          "then": {
+            "properties": {
+              "ratified_managers": { "maxItems": 0 }
+            }
+          }
+        }
+      ]
+    },
+    "ManagerDelegationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "issuer_id", "target_manager_id"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["GRANT", "REVOKE"]
+        },
+        "issuer_id": {
+          "oneOf": [
+            { "$ref": "#/$defs/HumanIDString" },
+            { "$ref": "#/$defs/OrganizationIDString" }
+          ]
+        },
+        "target_manager_id": {
+          "$ref": "#/$defs/IFayIDString"
+        }
+      }
+    },
+    "ActionAuditRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cofay_id", "owner_id", "actor_signer_id", "action_type", "timestamp"],
+      "properties": {
+        "cofay_id": { "$ref": "#/$defs/CoFayIDString" },
+        "owner_id": {
+          "oneOf": [
+            { "$ref": "#/$defs/HumanIDString" },
+            { "$ref": "#/$defs/OrganizationIDString" }
+          ]
+        },
+        "actor_signer_id": {
+          "oneOf": [
+            { "$ref": "#/$defs/CoFayIDString" },
+            { "$ref": "#/$defs/IFayIDString" },
+            { "$ref": "#/$defs/HumanIDString" },
+            { "$ref": "#/$defs/OrganizationIDString" }
+          ]
+        },
+        "action_type": {
+          "type": "string",
+          "minLength": 3
+        },
+        "acting_as_natural_person": {
+          "const": false
+        },
+        "timestamp": { "$ref": "#/$defs/Timestamp" }
+      }
+    }
+  }
+}
