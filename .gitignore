@@ -16,6 +16,11 @@
 !/SECURITY.md
 !/CONTRIBUTING.md
 !/CODE_OF_CONDUCT.md
+!/.github/
+/.github/*
+!/.github/workflows/
+/.github/workflows/*
+!/.github/workflows/docs-ci.yml
 
 # === 已放行目录内仍要剔除的噪声 ===
 .DS_Store
