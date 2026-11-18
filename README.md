@@ -1,5 +1,10 @@
 # coFay (`@ifay/cofay`)
 
+[![Docs CI](https://github.com/ChainMode/coFay/actions/workflows/docs-ci.yml/badge.svg)](https://github.com/ChainMode/coFay/actions/workflows/docs-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](./LICENSE-DOCS)
+[![Website: ifay.ai](https://img.shields.io/badge/Website-ifay.ai-blue)](https://ifay.ai)
+
 **coFay** (**Common Fay**) is the public social role incarnation within the **Fay** ecosystem (`Fay = iFay + coFay`). While an **iFay** (**Individual Fay**) is instantiated from and permanently aligned with a single **Human Prime** via a personal **Ego** model, a **coFay** embodies an addressable, chartered public or organizational function—such as a civic or enterprise service desk (`org_service`), a statutory or governance post (`functional_post`), or a cross-entity project collaborator (`project_collaborator`).
 
 Whether a Human Prime (acting through a governed `iFay`) or another `Fay` connects to a public skill, callers address the stable `cofay_<base32>` role endpoint rather than targeting a specific individual operator.
