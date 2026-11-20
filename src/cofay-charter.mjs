@@ -1206,3 +1206,29 @@ export function runCoFactsL1Check(subject, options = {}) {
     errors: validation.errors,
   };
 }
+
+export {
+  BUF_MAGIC,
+  BUF_FORMAT_VERSION_V1,
+  BUF_HEADER_SIZE,
+  BUF_TRAILER_SIZE,
+  SOUL_PACKAGE_SCHEMA_VERSION,
+  TASK_IR_SCHEMA_VERSION,
+  computeCrc32,
+  encodeCanonicalCbor,
+  decodeCanonicalCbor,
+  buildEmbeddedFayManifest,
+  packCoFayBuf,
+  inspectCoFayBuf,
+} from "./cofay-buf.mjs";
+
+export {
+  ARCHETYPE_TEMPLATES,
+  encodeBase32Lower,
+  generateBase32Id,
+  generateEd25519SeedHex,
+  createSeatCharter,
+  createSeatBundle,
+  rotateSteward,
+  executeDualSignedTransfer,
+} from "./cofay-seat-wizard.mjs";

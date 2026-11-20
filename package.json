@@ -1,20 +1,26 @@
 {
   "name": "@ifay/cofay",
-  "version": "1.0.0",
-  "description": "coFay (Common Fay) RoleCharter 1.0 schema, vectors, dual-signed ownership transfer validator, and coFACTS L1 conformance checker.",
+  "version": "1.1.0",
+  "description": "coFay (Common Fay) runnable public-role seat wizard, steward rotation & dual-signed transfer CLI, FayGer BUF\\0 v1 packer, and coFACTS L1 conformance validator.",
   "license": "MIT",
   "type": "module",
   "main": "./src/cofay-charter.mjs",
   "types": "./src/cofay-charter.d.ts",
+  "bin": {
+    "cofay": "./bin/cofay.mjs"
+  },
   "exports": {
     ".": {
       "types": "./src/cofay-charter.d.ts",
       "import": "./src/cofay-charter.mjs"
     },
+    "./buf": "./src/cofay-buf.mjs",
+    "./wizard": "./src/cofay-seat-wizard.mjs",
     "./schemas/role-charter-1.0": "./schemas/cofay-role-charter-1.0.json",
     "./vectors/role-charter-1.0": "./vectors/cofay-role-charter-vectors.json"
   },
   "files": [
+    "bin",
     "src",
     "schemas",
     "schema",
@@ -28,6 +34,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "demo": "node ./bin/cofay.mjs demo"
   }
 }

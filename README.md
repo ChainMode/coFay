@@ -57,11 +57,16 @@ cofay/
 │       └── schema.mdx
 ├── vectors/
 │   └── cofay-role-charter-vectors.json      # 20 positive & negative Ed25519 JCS conformance vectors
+├── bin/
+│   └── cofay.mjs                            # Zero-dependency runnable CLI (create, rotate-steward, transfer, pack-buf, verify, demo)
 ├── src/
 │   ├── cofay-charter.mjs                    # Zero-dependency Node ESM validator, signer & coFACTS L1 checker
+│   ├── cofay-seat-wizard.mjs                # Seat bundle generator, steward rotation & dual-signed transfer helpers
+│   ├── cofay-buf.mjs                        # Standards-compliant FayGer BUF\0 v1 binary packer & inspector
 │   └── cofay-charter.d.ts                   # TypeScript type declarations
 ├── tests/
-│   └── cofay-charter.test.mjs               # Automated Node test suite
+│   ├── cofay-charter.test.mjs               # Normative RoleCharter & conformance vector suite
+│   └── cofay-cli-and-buf.test.mjs           # CLI wizard, rotation, transfer & BUF\0 v1 test suite
 ├── package.json
 ├── CONTRIBUTING.md
 ├── SECURITY.md
@@ -72,12 +77,48 @@ cofay/
 
 ---
 
-## Quick Verification & Usage
+## Quick Verification & CLI Toolkit
 
 Requires **Node.js >= 20** (zero external runtime dependencies):
 
 ```bash
 npm test
+npm run demo
+```
+
+### Seat Wizard, Rotation, Transfer, `BUF\0` Packer & `coFACTS` L1 CLI
+
+```bash
+# 1. Create a signed coFay public-role seat bundle (org_service | functional_post | project_collaborator)
+node ./bin/cofay.mjs create \
+  --archetype org_service \
+  --name "Civic Public Permit Desk" \
+  --owner-type organization \
+  --owner-id org_civic-service-bureau \
+  --steward-id hid_a3d5f7g4j2k4m6n5p2q4r6s7t2 \
+  --out-dir ./my-seat
+
+# 2. Rotate the accountable natural-person steward (charter_revision + 1, continuous MeritPocket)
+node ./bin/cofay.mjs rotate-steward \
+  --charter ./my-seat/role-charter.json \
+  --new-steward hid_b4f6g7h2j4k6m7n2p4q6r7s2t4 \
+  --out ./my-seat/role-charter.json
+
+# 3. Execute atomic dual-signed ownership transfer (TransferEnvelope 1.0, 0% inheritance haircut)
+node ./bin/cofay.mjs transfer \
+  --charter ./my-seat/role-charter.json \
+  --to-owner-type organization \
+  --to-owner-id org_metro-digital-agency \
+  --new-steward hid_z4y6x7w6v5t4s3r2q7p6n5m4k3 \
+  --out ./my-seat/role-charter.json
+
+# 4. Pack a FayGer BUF\0 v1 seat artifact mountable by `fayger inspect` / `fayger up`
+node ./bin/cofay.mjs pack-buf \
+  --charter ./my-seat/role-charter.json \
+  --out ./my-seat/seat.buf
+
+# 5. Run coFACTS L1 conformance verification on RoleCharter JSON or .buf artifact
+node ./bin/cofay.mjs verify ./my-seat/seat.buf
 ```
 
 ### Programmatic Example

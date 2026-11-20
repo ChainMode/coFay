@@ -118,3 +118,127 @@ export function runCoFactsL1Check(
   subject: unknown,
   options?: { verifySignature?: boolean }
 ): CoFactsL1Report;
+
+export const BUF_MAGIC: Buffer;
+export const BUF_FORMAT_VERSION_V1: 1;
+export const BUF_HEADER_SIZE: 40;
+export const BUF_TRAILER_SIZE: 44;
+export const SOUL_PACKAGE_SCHEMA_VERSION: "fayger-soul-package/1.0";
+export const TASK_IR_SCHEMA_VERSION: "fayger-task-ir/0.2";
+
+export function computeCrc32(bytes: Uint8Array): number;
+export function encodeCanonicalCbor(value: unknown): Buffer;
+export function decodeCanonicalCbor(buffer: Uint8Array): unknown;
+export function buildEmbeddedFayManifest(
+  charter: RoleCharter,
+  requestedCapabilities?: string[]
+): Record<string, unknown>;
+
+export interface PackedCoFayBuf {
+  bytes: Buffer;
+  totalLength: number;
+  manifestDigestHex: string;
+  crc32: number;
+  charterDigestHex: string;
+  bufManifest: Record<string, unknown>;
+  soulMetadata: Record<string, unknown>;
+  fayManifest: Record<string, unknown>;
+}
+
+export function packCoFayBuf(
+  charter: RoleCharter,
+  options?: { verifySignature?: boolean; capabilities?: string[] }
+): PackedCoFayBuf;
+
+export function inspectCoFayBuf(
+  inputBytes: Uint8Array,
+  options?: { verifySignature?: boolean }
+): {
+  valid: boolean;
+  header?: Record<string, unknown>;
+  trailer?: Record<string, unknown>;
+  manifest?: Record<string, unknown>;
+  sections?: string[];
+  soulMetadata?: Record<string, unknown> | null;
+  fayManifest?: Record<string, unknown> | null;
+  charter?: RoleCharter | null;
+  cofactsReport?: CoFactsL1Report | null;
+  errors: ValidationError[];
+};
+
+export function generateBase32Id(prefix: string, seedMaterial?: string): string;
+export function generateEd25519SeedHex(): string;
+
+export function createSeatCharter(options?: {
+  roleArchetype?: RoleArchetype;
+  displayName?: string;
+  ownerType?: "human" | "organization";
+  ownerId?: string;
+  stewardHumanId?: string | null;
+  managers?: string[];
+  missionStatement?: string;
+  privateKeySeedHex?: string;
+  cofayId?: string;
+  outDir?: string;
+}): ValidationResult & {
+  charter?: RoleCharter;
+  cofactsReport?: CoFactsL1Report;
+  signerId?: string;
+  publicKeyHex?: string;
+  privateKeySeedHex?: string;
+};
+
+export function createSeatBundle(options?: Record<string, unknown>): ValidationResult & {
+  charter?: RoleCharter;
+  cofactsReport?: CoFactsL1Report;
+  fayManifest?: Record<string, unknown>;
+  seatMetadata?: Record<string, unknown>;
+  bufArtifact?: PackedCoFayBuf | null;
+  files?: Record<string, string> | null;
+};
+
+export function rotateSteward(
+  currentCharter: RoleCharter,
+  options: {
+    newStewardHumanId: string;
+    signerId?: string;
+    privateKeySeedHex: string;
+    managers?: string[];
+    issuedAt?: string;
+    verifySignature?: boolean;
+  }
+): ValidationResult & {
+  priorCharterDigestHex?: string;
+  nextCharter?: RoleCharter;
+  meritContinuity?: {
+    cofay_id: string;
+    gmc_merit_pocket_ref?: string;
+    retention_ratio: "1.0";
+    inheritance_haircut: "0%";
+  };
+};
+
+export function executeDualSignedTransfer(
+  currentCharter: RoleCharter,
+  options: {
+    toOwner: { type: "human" | "organization"; id: string };
+    newStewardHumanId?: string;
+    managerPolicy?: "CLEAR_ALL" | "RATIFY_NEW";
+    ratifiedManagers?: string[];
+    fromSignerId?: string;
+    fromPrivateKeySeedHex: string;
+    toSignerId?: string;
+    toPrivateKeySeedHex: string;
+    initiatedAt?: string;
+    expiresAt?: string;
+  }
+): ValidationResult & {
+  envelope?: TransferEnvelope;
+  nextCharter?: RoleCharter;
+  meritContinuity?: {
+    cofay_id: string;
+    gmc_merit_pocket_ref?: string;
+    retention_ratio: "1.0";
+    inheritance_haircut: "0%";
+  };
+};

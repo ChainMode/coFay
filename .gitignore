@@ -6,6 +6,7 @@
 !/schemas/
 !/schema/
 !/vectors/
+!/bin/
 !/src/
 !/tests/
 !/package.json
